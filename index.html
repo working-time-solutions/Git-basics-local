@@ -257,38 +257,138 @@ git status
 					</section>
 
 					<section>
-						<h2>View differences between working and index</h2>
-						<p>TO DO</p>
-					</section>
+						<h2>View differences between versions of a file</h2>
+						<pre>
+# Create a repository
+mkdir 1
+cd 1
+git init
 
-					<section>
-						<h2>View differences between index and repository</h2>
-						<p>TO DO</p>
-					</section>
 
-					<section>
-						<h2>View difference between working and repository</h2>
-						<p>TO DO</p>
+# Create a file and add it to the repository
+echo "r" > f1
+git add f1
+git commit -m "Added f1 to the repository"
+
+
+# Modify the file and add change to the index
+echo "s" > f1
+git add f1
+
+
+# Modify the workspace copy of the file.
+echo "w" > f1
+
+
+# View the differences between the files
+
+git diff              # shows the difference between working and index
+git diff --cached     # shows the difference between index and the repository
+git diff HEAD         # shows the difference between working and the repository
+
+
+						</pre>
+						<p>
+							You can set up git to use file comparison tools.
+						</p>
 					</section>
 
 					<section>
 						<h2>Amend your previous commit</h2>
-						<P>TO DO</p>
+						<pre>
+# create repository
+mkdir 1
+cd 1
+git init
+
+
+# Create a file and add it to the repository
+echo "a" > f1
+git add f1
+git commit -m "Initial commit of project"
+
+
+# view all the files included in the commit
+git log 
+git ls-tree --name-only -r {commit id}
+
+
+# Modify the commit
+echo "1" > f1
+git add f1
+echo "2" > f2
+git add f2
+git commit --amend
+
+
+
+# view the commit again  ( Note the commit id has changed but only one entry in the log )
+git log
+git ls-tree --name-only -r {commit id}
+
+						</pre>
 					</section>
 
 					<section>
 						<h2>Revert a previous commit</h2>
-						<p>TO DO</p>
+						<pre>
+# create repository
+mkdir 1
+cd 1
+git init
+
+
+# Create files and add them to the repository
+echo "1" > f1
+echo "2" > f2
+git add f1 f2
+git commit -m "Initial commit"
+
+
+# Remove a file from the project
+rm f2
+git add f2
+git commit -m "Removed f2"
+
+
+# Revert the commit
+git log
+git revert {commit id}
+
+
+# To set the workspace back to a pre commit state without actually applying the revert
+git log
+git revert -n {commit id} # reset the workspace and index but does not commit
+
+						</pre>
 					</section>
 
 					<section>
+						<!-- Git ignore before any files have been commited -->
 						<h2>Prevent files from begin added to the repository</h2>
-						<p>TO DO</p>
-					</section>
+						<pre>
+# Create repository
+mkdir 1
+cd 1
+git init
 
-					<section>
-						<h2>Excluding files from the repository after you have commited them</h2>
-						<p>TO DO</p>
+
+# Create files and add a .tst to the index
+touch f1 f1.tst f2 f2.tst
+git add f1.tst
+git status
+
+
+# Create an ignore file
+echo "*.tst" > .gitignore
+git status                     # Notice that f1.tst is still in the index.
+
+
+# Clear f1.tst from the index
+git reset f1.tst
+git status
+
+						</pre>
 					</section>
 
 				</section>
