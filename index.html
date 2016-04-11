@@ -391,6 +391,31 @@ git status
 						</pre>
 					</section>
 
+					<section>
+						<h2>clear files from repository that have been added to the ignore file</h2>
+						<pre>
+# Create repository
+mkdir 1
+cd 1
+git init
+
+
+# Create files and add a .tst to the repository
+touch f1 f1.tst f2 f2.tst
+git add f1.tst
+git commit -m "Add file that should be ignored to the repository"
+
+
+# Clear the file from the index and commit the change to the repository
+git rm --cached f1.tst
+git status
+git commit -m "Removed file that should be ignored but was added by accident"
+
+						</pre>
+
+
+					</section>
+
 				</section>
 
 			</div>
